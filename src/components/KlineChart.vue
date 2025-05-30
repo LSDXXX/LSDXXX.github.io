@@ -77,14 +77,14 @@ const getOrUpdateOptions = () => {
            {
              left: '3%',
              right: '3%',
-             height: '50%'
+             height: '75%'
            },
-           {
-             left: '3%',
-             right: '3%',
-             top: '63%',
-             height: '16%'
-           }
+          //  {
+          //    left: '3%',
+          //    right: '3%',
+          //    top: '63%',
+          //    height: '16%'
+          //  }
         ],
         xAxis: [
             {
@@ -101,7 +101,7 @@ const getOrUpdateOptions = () => {
             },
             {
               type: 'category',
-              gridIndex: 1,
+              // gridIndex: 1,
               data: props.klineData.map(item=>item[0]),
               boundaryGap: false,
               axisLine: { onZero: false },
@@ -121,12 +121,14 @@ const getOrUpdateOptions = () => {
             },
             {
               scale: true,
-              gridIndex: 1,
+              // gridIndex: 1,
               splitNumber: 2,
               axisLabel: { show: false },
               axisLine: { show: false },
               axisTick: { show: false },
-              splitLine: { show: false }
+              splitLine: { show: false },
+              position: 'right',
+              max: (extent) => Math.round(extent.max* 2.5),
             }
         ],
         dataZoom: [
@@ -166,6 +168,9 @@ const getOrUpdateOptions = () => {
                 xAxisIndex: 1,
                 yAxisIndex: 1,
                 data: props.klineData.map(item=>item[5]),
+                itemStyle: {
+                  opacity: 0.5
+                }
             }
         ]
     }

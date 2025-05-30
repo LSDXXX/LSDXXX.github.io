@@ -86,11 +86,27 @@ watch(
     {deep: true}
 )
 
+
+let resizeObserver: ResizeObserver
+
+const setupResizeObserver = () => {
+    resizeObserver = new ResizeObserver((entries) => {
+        window.requestAnimationFrame(() => {
+          if (!Array.isArray(entries) || !entries.length) return;
+          chart.resize()
+        });
+
+      }
+    );
+    resizeObserver.observe(profitsDistributionChart.value);
+}
+
 onMounted(() => {
   // 初始化echarts实例
   chart = init(profitsDistributionChart.value)
   // 设置echarts配置属性
   getOrUpdateOptions()
+  setupResizeObserver()
 })
 
 </script>

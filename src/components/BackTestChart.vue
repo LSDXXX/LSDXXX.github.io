@@ -7,7 +7,7 @@
     :pagination="false"
   />
   </div>
- <div ref="backTestChart" style="width: 100%; height: 100%;"></div>
+ <div ref="backTestChart" style="width: 100%; height: 600px;"></div>
 </template>
 
 <script setup lang="ts">
@@ -100,15 +100,18 @@ const getOrUpdateOptions = () => {
   },
   yAxis: [
     {
-      type: 'value',
+      type: 'log',
+      min: Math.min(...props.balance),
+      max: Math.max(...props.balance)
     },
     {
       type: 'value',
       inverse: true,
       alignTicks: true,
+      min: 0,
       axisLabel: {
         formatter: (value) => {
-          return  value+'%'
+          return  value.toFixed(2)+'%'
         }
       }
     }
@@ -210,6 +213,22 @@ defineExpose({getOrUpdateOptions})
 
 let chart: EChartsType
 
+
+let resizeObserver: ResizeObserver
+
+const setupResizeObserver = () => {
+    resizeObserver = new ResizeObserver((entries) => {
+        window.requestAnimationFrame(() => {
+          if (!Array.isArray(entries) || !entries.length) return;
+          chart.resize()
+        });
+
+      }
+    );
+    resizeObserver.observe(backTestChart.value);
+}
+
+
 onMounted(() => {
 
   // 初始化echarts实例
@@ -217,6 +236,7 @@ onMounted(() => {
   // 设置echarts配置属性
   getOrUpdateOptions()
   // chart.setOption(option)
+  setupResizeObserver()
 })
 
 onUnmounted(() => {

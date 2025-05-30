@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { onMounted, ref, watch } from 'vue';
+import { setup } from 'vue-class-component';
 
 const returnsChart = ref()
 
@@ -103,10 +104,26 @@ watch(
 
 let chart: EChartsType
 
+
+let resizeObserver: ResizeObserver
+
+const setupResizeObserver = () => {
+    resizeObserver = new ResizeObserver((entries) => {
+        window.requestAnimationFrame(() => {
+          if (!Array.isArray(entries) || !entries.length) return;
+          chart.resize()
+        });
+
+      }
+    );
+    resizeObserver.observe(returnsChart.value);
+}
+
 onMounted(() => {
   chart = init(returnsChart.value)
   // 设置echarts配置属性
   getOrUpdateOptions()
+  setupResizeObserver()
 })
 
 

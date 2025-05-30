@@ -15,7 +15,7 @@
     </a-flex> 
     <div>
         <template v-if="selectedChart=='BackTestChart'">
-            <div style="height: 600px;">
+            <!-- <div style="height: 600px;"> -->
             <BackTestChart ref="backTestChart"
                 :cash="backTestData.cash" 
                 :datetime="backTestData.date" 
@@ -23,7 +23,7 @@
                 :balance="backTestData.balance"
                 :table-data="backTestTableData"
                 ></BackTestChart>
-            </div>
+            <!-- </div> -->
         </template>
         <template v-else-if="selectedChart=='ReturnsChart'">
             <div style="height: 600px;">

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 type JumpToFunction = (stock: string, date: string) => void
 
@@ -173,6 +173,14 @@ const columns = [
 ];
 
 let data = ref<any[]>()
+
+watch(
+    () => props,
+    () => {
+        data.value = getTableData(props.records)
+    },
+    {deep: true}
+)
 
 onMounted(() => {
     data.value = getTableData(props.records)
