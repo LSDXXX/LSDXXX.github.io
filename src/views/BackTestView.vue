@@ -530,7 +530,7 @@ const updateAnalysisData = () => {
     }
     tradeProfitsPCT.value = profitPCT
     backTestTableData.value=  {
-        totalPNL: netProfit[0] / initialBalance,
+        totalPNL: (finalBalance - initialBalance)/ initialBalance,
         maxDrawdown: maxDrawDown,
         tradeCount: tradeCount,
         winRate: winCount[0]/tradeCount,
